@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>charge. 100小时专注充能站</title>
+<meta name="theme-color" content="#0A0A0F">
+<meta name="description" content="100 HOURS OF FOCUS · 把专注充成能量">
+<link rel="icon" type="image/png" href="icon-192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon-180.png">
+<link rel="manifest" href="manifest.json">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{
+  background:#0A0A0F;color:#F4F4F8;
+  font-family:'Space Grotesk',-apple-system,BlinkMacSystemFont,'PingFang SC','Noto Sans SC','Microsoft YaHei',sans-serif;
+  min-height:100vh;overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+:root{
+  --teal:#5EEAD4; --violet:#A78BFA; --pink:#F472B6;
+  --line:rgba(255,255,255,.09); --glass:rgba(255,255,255,.035);
+  --dim:#8A8A9A;
+}
+.mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+/* ---------- 极光背景 ---------- */
+.aurora{position:fixed;inset:0;z-index:-2;overflow:hidden;background:#0A0A0F}
+.aurora i{position:absolute;border-radius:50%;filter:blur(90px);opacity:.32}
+.a1{width:52vw;height:52vw;left:-14vw;top:-18vw;background:radial-gradient(circle,#14B8A6,transparent 70%)}
+.a2{width:46vw;height:46vw;right:-12vw;top:6vh;background:radial-gradient(circle,#7C3AED,transparent 70%)}
+.a3{width:40vw;height:40vw;left:22vw;bottom:-16vw;background:radial-gradient(circle,#DB2777,transparent 70%);opacity:.2}
+.grain{position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.5;
+  background-image:radial-gradient(rgba(255,255,255,.028) 1px,transparent 1px);background-size:3px 3px}
+.wrap{max-width:760px;margin:0 auto;padding:0 20px 90px}
+.fadein{opacity:0;transform:translateY(20px);transition:opacity .8s cubic-bezier(.2,.7,.2,1),transform .8s cubic-bezier(.2,.7,.2,1)}
+.fadein.in{opacity:1;transform:none}
+/* ---------- hero ---------- */
+.hero{padding:clamp(34px,7vw,64px) 0 30px;text-align:center}
+.brand{display:inline-flex;align-items:center;gap:9px;border:1px solid var(--line);border-radius:999px;
+  padding:7px 16px;background:var(--glass);backdrop-filter:blur(14px);font-size:11px;letter-spacing:.28em;color:var(--dim)}
+.brand b{color:#fff}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--teal);box-shadow:0 0 12px var(--teal);animation:pulse 2.2s infinite}
+@keyframes pulse{50%{opacity:.4;box-shadow:0 0 3px var(--teal)}}
+h1{margin-top:20px;font-size:clamp(40px,9vw,68px);font-weight:700;letter-spacing:-.02em;line-height:1.02}
+h1 .grad{background:linear-gradient(92deg,var(--teal) 5%,var(--violet) 55%,var(--pink) 100%);
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.sub{margin-top:12px;color:var(--dim);font-size:13.5px;letter-spacing:.16em}
+.sub b{color:#CFCFE0;font-weight:500}
+/* ---------- 进度环区 ---------- */
+.gauge{display:flex;justify-content:center;align-items:center;gap:clamp(20px,5vw,44px);margin:34px 0 8px}
+.ringbox{position:relative;width:172px;height:172px;flex:none}
+.ringbox svg{width:100%;height:100%;transform:rotate(-90deg)}
+.ringbox .tr{stroke:rgba(255,255,255,.07)}
+.ringbox .pr{stroke:url(#rg);stroke-linecap:round;transition:stroke-dashoffset .9s cubic-bezier(.2,.7,.2,1)}
+.ring-c{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.ring-c .big{font-size:40px;font-weight:700;letter-spacing:-.02em;font-family:ui-monospace,Menlo,monospace}
+.ring-c .big span{font-size:17px;color:var(--dim);font-weight:500}
+.ring-c .lbl{font-size:10px;letter-spacing:.3em;color:var(--dim);margin-top:3px}
+.gstats{display:flex;flex-direction:column;gap:13px}
+.gs{min-width:118px}
+.gs .v{font-size:clamp(21px,4.6vw,27px);font-weight:700;font-family:ui-monospace,Menlo,monospace;
+  background:linear-gradient(90deg,#fff,#B9B9CC);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.gs .k{font-size:10.5px;letter-spacing:.24em;color:var(--dim);margin-top:2px}
+/* ---------- 玻璃卡 ---------- */
+.glass{background:var(--glass);border:1px solid var(--line);border-radius:22px;
+  backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.06), 0 20px 50px rgba(0,0,0,.35);
+  padding:22px;margin-top:18px}
+.glabel{display:flex;align-items:center;gap:10px;font-size:11px;letter-spacing:.26em;color:var(--dim);margin-bottom:14px}
+.glabel .n{font-size:10px;padding:3px 9px;border-radius:999px;border:1px solid var(--line);color:#B9B9CC;font-weight:600;letter-spacing:.1em}
+input[type=date],input[type=text],textarea{
+  width:100%;background:rgba(0,0,0,.28);border:1px solid var(--line);border-radius:14px;
+  color:#F4F4F8;padding:13px 16px;font-size:15.5px;outline:none;transition:border .25s, box-shadow .25s;
+  font-family:inherit;-webkit-appearance:none}
+input:focus,textarea:focus{border-color:rgba(94,234,212,.55);box-shadow:0 0 0 3px rgba(94,234,212,.12)}
+input::placeholder,textarea::placeholder{color:#5B5B6E}
+textarea{resize:vertical;min-height:96px;line-height:1.65}
+.dates{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.dcell label{display:block;font-size:10.5px;letter-spacing:.24em;color:var(--dim);margin-bottom:7px}
+#goal{font-size:clamp(17px,3.6vw,21px);font-weight:600;min-height:64px}
+/* ---------- 充能格 ---------- */
+#cells{display:grid;grid-template-columns:repeat(10,1fr);gap:7px;margin-top:4px}
+.cell{aspect-ratio:1;border-radius:9px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.03);
+  position:relative;cursor:pointer;transition:transform .18s cubic-bezier(.2,.7,.2,1),box-shadow .3s,background .3s,border .3s;
+  display:flex;align-items:center;justify-content:center}
+.cell .num{font-size:8.5px;color:#56566A;font-family:ui-monospace,Menlo,monospace;transition:color .3s}
+.cell:hover{transform:translateY(-2px) scale(1.06);border-color:rgba(94,234,212,.5)}
+.cell.on{background:linear-gradient(135deg,rgba(94,234,212,.9),rgba(167,139,250,.9) 55%,rgba(244,114,182,.9));
+  border-color:transparent;box-shadow:0 0 14px rgba(167,139,250,.45), inset 0 0 8px rgba(255,255,255,.25);animation:pop .38s cubic-bezier(.2,.9,.3,1.4)}
+.cell.on .num{color:rgba(10,10,15,.75);font-weight:700}
+@keyframes pop{0%{transform:scale(.7)}60%{transform:scale(1.12)}100%{transform:scale(1)}}
+.celtip{margin-top:12px;display:flex;justify-content:space-between;font-size:10.5px;letter-spacing:.2em;color:var(--dim)}
+.celtip b{color:#CFCFE0;font-weight:600}
+/* ---------- 愿景/拆解 ---------- */
+.dotbg{background-image:radial-gradient(rgba(255,255,255,.09) 1px,transparent 1.2px);background-size:16px 16px}
+#hope{font-size:16px}
+/* ---------- 满充彩蛋 ---------- */
+#full{position:fixed;inset:0;z-index:60;display:none;align-items:center;justify-content:center;flex-direction:column;gap:14px;
+  background:rgba(10,10,15,.88);backdrop-filter:blur(16px);text-align:center;padding:24px}
+#full.show{display:flex;animation:fadein .5s}
+#full .fv{font-size:clamp(34px,8vw,58px);font-weight:700;
+  background:linear-gradient(92deg,var(--teal),var(--violet),var(--pink));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+#full .fs{color:var(--dim);letter-spacing:.3em;font-size:12px}
+@keyframes fadein{from{opacity:0}to{opacity:1}}
+/* ---------- footer ---------- */
+.foot{margin-top:56px;text-align:center;color:#56566A;font-size:11px;letter-spacing:.3em;line-height:2}
+.foot b{color:#9A9AB0}
+#toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(20px);opacity:0;z-index:70;
+  background:rgba(20,20,28,.92);border:1px solid var(--line);border-radius:999px;padding:10px 22px;font-size:13px;
+  backdrop-filter:blur(12px);transition:all .35s cubic-bezier(.2,.7,.2,1);pointer-events:none}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+#toast b{color:var(--teal)}
+@media(max-width:520px){#cells{gap:6px}.gstats{flex-direction:row}}
+</style>
+</head>
+<body>
+<div class="aurora"><i class="a1"></i><i class="a2"></i><i class="a3"></i></div>
+<div class="grain"></div>
+
+<div class="wrap">
+
+  <header class="hero fadein">
+    <div class="brand"><span class="dot"></span><b>100 HOURS OF FOCUS</b>· 100 小时专注</div>
+    <h1>充能 <span class="grad">100 小时</span><br>让专注可见</h1>
+    <div class="sub">设定一个目标 · 每专注一小时点亮一格 · <b>100 格 = 一个新自己</b></div>
+  </header>
+
+  <section class="gauge fadein">
+    <div class="ringbox">
+      <svg viewBox="0 0 120 120">
+        <defs><linearGradient id="rg" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#5EEAD4"/><stop offset="55%" stop-color="#A78BFA"/><stop offset="100%" stop-color="#F472B6"/>
+        </linearGradient></defs>
+        <circle class="tr" cx="60" cy="60" r="52" fill="none" stroke-width="9"/>
+        <circle class="pr" id="ring" cx="60" cy="60" r="52" fill="none" stroke-width="9"
+          stroke-dasharray="326.7" stroke-dashoffset="326.7"/>
+      </svg>
+      <div class="ring-c">
+        <div class="big"><span id="cnt">0</span><span>/100</span></div>
+        <div class="lbl">CHARGED</div>
+      </div>
+    </div>
+    <div class="gstats">
+      <div class="gs"><div class="v" id="pct">0%</div><div class="k">能量</div></div>
+      <div class="gs"><div class="v" id="left">100h</div><div class="k">剩余</div></div>
+      <div class="gs"><div class="v" id="days">—</div><div class="k">总天数</div></div>
+    </div>
+  </section>
+
+  <section class="glass fadein">
+    <div class="glabel"><span class="n">01</span>DATES · 起止日期</div>
+    <div class="dates">
+      <div class="dcell"><label>START 起始日</label><input type="date" id="start"></div>
+      <div class="dcell"><label>END 结束日</label><input type="date" id="end"></div>
+    </div>
+  </section>
+
+  <section class="glass fadein">
+    <div class="glabel"><span class="n">02</span>GOAL · 目标</div>
+    <input type="text" id="goal" placeholder="这 100 小时，我要用来做什么？">
+  </section>
+
+  <section class="glass fadein">
+    <div class="glabel"><span class="n">03</span>CHARGE · 点亮你的专注小时</div>
+    <div id="cells"></div>
+    <div class="celtip"><span>已充 <b id="c2">0</b> 格</span><span>每格 = 1 小时</span><span>剩 <b id="c3">100</b> 格</span></div>
+  </section>
+
+  <section class="glass fadein">
+    <div class="glabel"><span class="n">04</span>100 HOURS LATER · 100 小时后我希望</div>
+    <textarea id="hope" class="dotbg" placeholder="100 小时后的我，正在……"></textarea>
+  </section>
+
+  <section class="glass fadein">
+    <div class="glabel"><span class="n">05</span>BREAK IT DOWN · 拆解目标</div>
+    <textarea id="brk" class="dotbg" placeholder="拆成小块：先做哪一步？每周几小时？" style="min-height:150px"></textarea>
+  </section>
+
+  <footer class="foot fadein">
+    <b>CHARGE.</b> · 100 HOURS OF FOCUS<br>FOCUS IS ENERGY
+  </footer>
+</div>
+
+<div id="full"><div class="fv">FULLY CHARGED ⚡</div><div class="fs">100 HOURS COMPLETE · 你说到做到</div></div>
+<div id="toast"></div>
+
+<script>
+
+// ---------- engine ----------
+const $ = s => document.querySelector(s);
+const KEY = 'charge100_v1';
+let S = JSON.parse(localStorage.getItem(KEY) || 'null') || {cells:[], start:'', end:'', goal:'', hope:'', brk:''};
+
+const total = 100, CIRC = 2*Math.PI*52;
+document.getElementById('ring').setAttribute('stroke-dasharray', CIRC.toFixed(1));
+const cellsEl = document.getElementById('cells');
+cellsEl.innerHTML = Array.from({length: total}, (_,i) =>
+  '<button class="cell" data-i="'+i+'" aria-label="第 '+(i+1)+' 小时"><span class="num">'+String(i+1).padStart(2,'0')+'</span></button>').join('');
+
+function toast(msg){
+  const t = $('#toast'); t.innerHTML = msg; t.classList.add('show');
+  clearTimeout(window.__tt); window.__tt = setTimeout(()=>t.classList.remove('show'), 1700);
+}
+function save(){ localStorage.setItem(KEY, JSON.stringify(S)); }
+
+function syncAll(){
+  const n = S.cells.length;
+  $('#cnt').textContent = n;
+  $('#c2').textContent = n;
+  $('#c3').textContent = total - n;
+  const pct = Math.round(n/total*100);
+  $('#pct').textContent = pct + '%';
+  $('#left').textContent = (total-n) + 'h';
+  $('#ring').setAttribute('stroke-dashoffset', (CIRC*(1-n/total)).toFixed(1));
+  document.querySelectorAll('.cell').forEach(c => c.classList.toggle('on', S.cells.includes(+c.dataset.i)));
+  if (n === total && !window.__fired){ window.__fired = true; document.getElementById('full').classList.add('show'); }
+  if (n < total) { window.__fired = false; document.getElementById('full').classList.remove('show'); }
+  if (S.start && S.end){
+    const d = Math.round((new Date(S.end) - new Date(S.start))/86400000);
+    $('#days').textContent = (d>=0 ? d : '—') + 'd';
+  } else $('#days').textContent = '—';
+}
+cellsEl.addEventListener('click', e => {
+  const b = e.target.closest('.cell'); if (!b) return;
+  const i = +b.dataset.i;
+  const on = S.cells.includes(i);
+  if (on) S.cells = S.cells.filter(x => x !== i);
+  else { S.cells.push(i); S.cells.sort((a,b)=>a-b); }
+  save(); syncAll();
+  if (!on){
+    toast('<b>⚡ +1h</b> 已充 '+S.cells.length+' / 100');
+  } else {
+    toast('已收回 1 格 · 剩 '+(total-S.cells.length));
+  }
+});
+['start','end','goal','hope','brk'].forEach(id => {
+  const el = document.getElementById(id);
+  el.value = S[id] || '';
+  el.addEventListener('input', () => { S[id] = el.value; save(); if (id==='start'||id==='end') syncAll(); });
+});
+
+const io = new IntersectionObserver(es => es.forEach(e => {
+  if (e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+}), {threshold:.07});
+document.querySelectorAll('.fadein').forEach(el => io.observe(el));
+syncAll();
+
+</script>
+</body>
+</html>
