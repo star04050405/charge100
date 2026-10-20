@@ -67,6 +67,7 @@ textarea{min-height:88px;resize:vertical;line-height:1.7;background-image:radial
 .fullrow{display:none;margin-top:14px;text-align:center;font-size:13.5px;font-weight:700;color:#B8912F;
   background:#F7F0DC;border-radius:12px;padding:11px}
 .fullrow.show{display:block}
+.delrow.arm{background:#F3E2DC;color:#A94434;border-radius:12px;padding:12px 18px;font-weight:700;text-decoration:none;width:100%;margin-top:22px;transition:all .2s}
 .delrow{display:block;margin:22px auto 0;border:0;background:transparent;color:#C08A7E;font-size:13px;cursor:pointer;text-decoration:underline;text-underline-offset:3px}
 .foot{text-align:center;color:#B9B4A8;font-size:12px;line-height:2;padding:44px 0 6px}
 .foot b{font-size:13px;letter-spacing:.05em}
@@ -283,6 +284,23 @@ function close(){
   document.documentElement.style.setProperty('--pc', '#A9C0CE');
   renderList(); scrollTo(0,0);
 }
+let delArm = 0;
+$('#del').addEventListener('click', () => {
+  const p = P(); if (!p) return;
+  const btn = $('#del');
+  if (!delArm){
+    delArm = 1;
+    btn.classList.add('arm');
+    btn.textContent = '再点一次，删除「'+p.name+'」';
+    clearTimeout(window.__dt);
+    window.__dt = setTimeout(() => { delArm = 0; btn.classList.remove('arm'); btn.textContent = '删除此项目'; }, 3200);
+  } else {
+    delArm = 0;
+    S.projects = S.projects.filter(x => x.id !== p.id);
+    save(); btn.classList.remove('arm'); btn.textContent = '删除此项目';
+    close(); toast('已删除「'+p.name+'」');
+  }
+});
 $('#bk').addEventListener('click', close);
 renderList();
 </script>
