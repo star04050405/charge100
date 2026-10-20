@@ -15,209 +15,163 @@ html{scroll-behavior:smooth}
 body{
   background:#FAF8F3;color:#3A3A38;
   font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Noto Sans SC','Microsoft YaHei',sans-serif;
-  min-height:100vh;overflow-x:hidden;
-  -webkit-font-smoothing:antialiased;
+  min-height:100vh;overflow-x:hidden;-webkit-font-smoothing:antialiased;
 }
-:root{
-  --ink:#3A3A38; --dim:#9A968C; --line:#ECE8E0;
-  --card:#FFFFFF;
-}
-.mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
-.wrap{max-width:620px;margin:0 auto;padding:0 20px 80px}
-.fadein{opacity:0;transform:translateY(10px);transition:opacity .55s ease,transform .55s ease}
-.fadein.in{opacity:1;transform:none}
-button{font-family:inherit;color:inherit;background:none;border:none;cursor:pointer}
-input,textarea{
-  width:100%;border:1px solid var(--line);border-radius:10px;background:#fff;
-  padding:12px 14px;font-family:inherit;font-size:15px;color:var(--ink);
-  transition:border-color .2s;outline:none;
-}
-input:focus,textarea:focus{border-color:#C8C2B4}
-textarea{resize:vertical;line-height:1.7;min-height:96px}
-::placeholder{color:#C0BBB0}
-/* ---------- 顶栏 ---------- */
-.top{
-  position:sticky;top:0;z-index:40;background:rgba(250,248,243,.92);
-  backdrop-filter:blur(8px);border-bottom:1px solid var(--line);
-}
-.top-in{max-width:620px;margin:0 auto;padding:13px 20px;display:flex;align-items:center;justify-content:space-between}
-.brand{font-weight:800;font-size:17px;letter-spacing:.01em}
-.brand i{font-style:normal;color:#B3AEA2}
-.back{display:none;font-size:14px;color:var(--dim);padding:6px 2px}
-body.detail .back{display:block}
-body.detail .top-add{display:none}
-.top-add{
-  font-size:13px;font-weight:600;color:#fff;background:#8FA8B8;
-  padding:8px 14px;border-radius:999px;transition:opacity .2s;
-}
-.top-add:active{opacity:.8}
-/* ---------- 视图 ---------- */
-#viewList{padding-top:30px}
-body.detail #viewList{display:none}
-#viewProj{display:none;padding-top:26px}
-body.detail #viewProj{display:block}
-/* ---------- 列表 ---------- */
-.lhero{padding:6px 2px 22px}
-.lhero .en{font-size:11px;letter-spacing:.28em;color:var(--dim);font-weight:600}
-.lhero h1{font-size:26px;font-weight:800;margin-top:8px}
-.lhero p{font-size:13px;color:var(--dim);margin-top:7px;line-height:1.7}
-.plist{display:flex;flex-direction:column;gap:12px}
-.pcard{
-  background:var(--card);border:1px solid var(--line);border-radius:16px;
-  padding:18px;display:flex;gap:16px;align-items:center;text-align:left;
-  transition:transform .15s ease, box-shadow .2s ease;
-}
+:root{--ink:#3A3A38;--dim:#9A968C;--line:#ECE8E0;--card:#FFF;--pc:#A9C0CE}
+.wrap{max-width:640px;margin:0 auto;padding:0 20px 80px}
+body.detail .list-only{display:none}
+body:not(.detail) .proj-only{display:none}
+.top{display:flex;align-items:center;justify-content:space-between;padding:20px 2px 6px}
+.bk{display:none;border:0;background:transparent;font-size:20px;color:var(--ink);cursor:pointer;padding:6px 10px 6px 0}
+body.detail .bk{display:block}
+.brand{font-weight:800;font-size:17px;letter-spacing:.02em}
+.brand i{font-style:normal;font-weight:400;color:var(--dim);font-size:12px;letter-spacing:.14em;margin-left:8px}
+.addbtn{border:1.5px solid #3A3A38;background:#3A3A38;color:#fff;border-radius:999px;padding:9px 18px;font-size:13.5px;font-weight:600;cursor:pointer}
+.hero{padding:26px 2px 10px}
+.hero h1{font-size:31px;font-weight:800;letter-spacing:.01em;line-height:1.25}
+.hero h1 span{color:#B9B4A8}
+.hero .sub{margin-top:8px;color:var(--dim);font-size:13.5px;line-height:1.7}
+.plist{display:flex;flex-direction:column;gap:14px;margin-top:22px}
+.pcard{display:flex;align-items:center;gap:16px;background:var(--card);border:1px solid var(--line);
+  border-radius:20px;padding:18px;cursor:pointer;text-align:left;width:100%;
+  transition:transform .18s ease;position:relative;overflow:hidden}
 .pcard:active{transform:scale(.985)}
-.pdot{width:12px;height:12px;border-radius:50%;flex:none}
-.pmain{flex:1;min-width:0}
-.pname{font-size:16px;font-weight:700}
-.pmeta{font-size:12px;color:var(--dim);margin-top:4px}
-.pnum{font-size:13px;color:var(--dim);white-space:nowrap}
-.pnum b{font-size:19px;color:var(--ink);font-weight:700}
-.bar{height:4px;background:#F0EDE5;border-radius:99px;margin-top:9px;overflow:hidden}
-.bar i{display:block;height:100%;border-radius:99px}
-.empty{
-  text-align:center;padding:56px 20px;color:var(--dim);font-size:14px;line-height:2;
-  border:1px dashed var(--line);border-radius:16px;
-}
-/* ---------- 项目详情 ---------- */
-.phead{display:flex;align-items:center;gap:14px;padding:4px 2px 20px}
-.pring{width:64px;height:64px;flex:none}
-.pring svg{transform:rotate(-90deg)}
-.pring .pv{font-size:12px;font-weight:700}
-.ptit .en{font-size:10.5px;letter-spacing:.24em;color:var(--dim);font-weight:600}
-.ptit h1{font-size:22px;font-weight:800;margin-top:5px;word-break:break-all}
-.glass{
-  background:var(--card);border:1px solid var(--line);border-radius:16px;
-  padding:20px;margin-bottom:14px;
-}
-.glabel{font-size:11px;letter-spacing:.22em;color:var(--dim);font-weight:700;margin-bottom:14px}
-.glabel .n{color:#C8C2B4;margin-right:8px;font-weight:600}
-.dates{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.dates label{font-size:11px;color:var(--dim);display:block;margin-bottom:6px;letter-spacing:.06em}
-.dates .dd input{padding:10px 12px;font-size:14px}
-.goal-in{font-size:16px;font-weight:600}
-.daysline{margin-top:10px;font-size:12px;color:var(--dim)}
-.daysline b{color:var(--ink)}
-/* cells */
-.cells-wrap{display:grid;grid-template-columns:repeat(10,1fr);gap:6px}
-.cell{
-  aspect-ratio:1;border-radius:6px;border:1px solid var(--line);background:#fff;
-  font-size:8.5px;color:#CFCABF;display:flex;align-items:center;justify-content:center;
-  transition:background .18s,border-color .18s,color .18s;position:relative;padding:0;
-}
-@media (max-width:420px){.cells-wrap{gap:5px}.cell{font-size:8px}}
-.cell.on{border-color:transparent;color:#fff;font-weight:700}
-.cell:active{transform:scale(.9)}
-/* 配色淡雅：点亮=项目色柔和填充 */
-.celtip{display:flex;justify-content:space-between;font-size:11.5px;color:var(--dim);margin-top:12px}
+.pcard .band{position:absolute;left:0;top:0;bottom:0;width:6px}
+.pf{flex:1;min-width:0}
+.pf .e{font-size:30px;line-height:1.15;display:block}
+.pf .nm{font-size:16.5px;font-weight:700;margin-top:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block}
+.pf .meta{font-size:12px;color:var(--dim);margin-top:3px;display:block}
+.empty{border:1.5px dashed #D9D4C8;border-radius:20px;padding:44px 20px;text-align:center;color:var(--dim);
+  width:100%;font-size:14px;cursor:pointer;line-height:1.8;margin-top:14px;background:transparent}
+.empty b{display:block;font-size:30px;margin-bottom:6px;color:#B9B4A8}
+.phero{border-radius:24px;padding:30px 24px 26px;margin-top:14px;position:relative;overflow:hidden}
+.phero .e2{font-size:44px;display:block}
+.phero .nm{font-size:22px;font-weight:800;margin-top:8px}
+.phero .meta{font-size:12.5px;color:#6E6A60;margin-top:4px}
+.pring{position:absolute;right:22px;top:50%;transform:translateY(-50%)}
+.glass{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:18px;margin-top:14px}
+.glabel{font-size:11px;font-weight:700;letter-spacing:.18em;color:var(--dim);margin-bottom:10px}
+.glabel .n{color:#C9C3B6;margin-right:8px}
+input[type=date],input[type=text],textarea{width:100%;border:1.5px solid var(--line);border-radius:12px;
+  background:#FCFBF7;padding:12px 14px;font-size:15px;color:var(--ink);font-family:inherit;outline:none}
+input:focus,textarea:focus{border-color:var(--pc)}
+textarea{min-height:88px;resize:vertical;line-height:1.7;background-image:radial-gradient(#E4DFD4 1px,transparent 1px);background-size:18px 18px;background-position:6px 10px}
+.cw{display:grid;grid-template-columns:repeat(8,1fr);gap:8px}
+.cell{aspect-ratio:1;border:1.5px solid var(--line);border-radius:9px;background:#FCFBF7;cursor:pointer;
+  font-size:10.5px;color:#C4BFB2;font-family:ui-monospace,Menlo,monospace;transition:transform .15s ease}
+.cell:active{transform:scale(.86)}
+.cell.on{background:var(--pc);border-color:var(--pc);color:#fff;font-weight:700;animation:pop .25s ease}
+@keyframes pop{0%{transform:scale(.8)}60%{transform:scale(1.12)}100%{transform:scale(1)}}
+.celtip{display:flex;justify-content:space-between;margin-top:12px;font-size:12px;color:var(--dim)}
 .celtip b{color:var(--ink)}
-/* 全充徽章 */
-.fullrow{
-  display:none;margin-top:14px;padding:10px 14px;border-radius:10px;font-size:13px;font-weight:700;
-  background:#F3EFE4;color:#8A7B4F;text-align:center;letter-spacing:.06em;
-}
+.fullrow{display:none;margin-top:14px;text-align:center;font-size:13.5px;font-weight:700;color:#B8912F;
+  background:#F7F0DC;border-radius:12px;padding:11px}
 .fullrow.show{display:block}
-.delrow{
-  text-align:center;margin:6px 0 0;font-size:12px;color:#C4A9A1;padding:10px;
-}
-.delrow:active{opacity:.6}
-/* ---------- foot ---------- */
-.foot{text-align:center;color:#C0BBB0;font-size:12px;line-height:2;padding-top:44px}
-.foot b{letter-spacing:.06em}
-/* toast */
-#toast{
-  position:fixed;left:50%;bottom:36px;transform:translate(-50%,14px);
-  background:#3A3A38;color:#fff;font-size:13px;padding:10px 18px;border-radius:999px;
-  opacity:0;pointer-events:none;transition:all .3s;z-index:99;white-space:nowrap;
-}
-#toast.show{opacity:1;transform:translate(-50%,0)}
-#toast b{color:#EAD9A8}
+.delrow{display:block;margin:22px auto 0;border:0;background:transparent;color:#C08A7E;font-size:13px;cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+.foot{text-align:center;color:#B9B4A8;font-size:12px;line-height:2;padding:44px 0 6px}
+.foot b{font-size:13px;letter-spacing:.05em}
+#sheetMask{position:fixed;inset:0;background:rgba(58,58,56,.32);opacity:0;pointer-events:none;transition:opacity .25s;z-index:40}
+#sheet{position:fixed;left:0;right:0;bottom:0;background:#FFFDF8;border-radius:26px 26px 0 0;z-index:41;
+  transform:translateY(105%);transition:transform .32s cubic-bezier(.32,.72,.28,1);padding:14px 22px calc(26px + env(safe-area-inset-bottom));max-width:640px;margin:0 auto}
+body.sheetopen #sheetMask{opacity:1;pointer-events:auto}
+body.sheetopen #sheet{transform:none}
+.sh-h{display:flex;justify-content:space-between;align-items:center;margin:4px 0 12px}
+.sh-h b{font-size:16px}
+.sh-close{border:0;background:#F1EEE6;border-radius:999px;width:30px;height:30px;font-size:14px;cursor:pointer;color:var(--dim)}
+.sh-l{font-size:11px;font-weight:700;letter-spacing:.16em;color:var(--dim);margin:14px 0 8px}
+.egrid{display:grid;grid-template-columns:repeat(9,1fr);gap:6px;max-height:196px;overflow-y:auto;padding:2px}
+.eg{border:1.5px solid transparent;background:#F6F3EC;border-radius:11px;font-size:19px;padding:7px 0;cursor:pointer;transition:all .15s}
+.eg.on{background:#fff;border-color:var(--pc);transform:scale(1.12);box-shadow:0 2px 10px rgba(0,0,0,.06)}
+.cgrid{display:flex;gap:10px;flex-wrap:wrap}
+.cdot{width:34px;height:34px;border-radius:999px;border:2.5px solid transparent;cursor:pointer;position:relative}
+.cdot.on{border-color:#3A3A38}
+.cdot.on::after{content:'✓';position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px;font-weight:800}
+.sh-go{width:100%;margin-top:18px;border:0;background:#3A3A38;color:#fff;border-radius:14px;padding:14px;font-size:15px;font-weight:700;cursor:pointer}
+#toast{position:fixed;left:50%;bottom:34px;transform:translateX(-50%) translateY(16px);background:#3A3A38;color:#fff;
+  padding:11px 20px;border-radius:999px;font-size:13.5px;opacity:0;transition:all .3s;pointer-events:none;z-index:60;max-width:86vw;text-align:center}
+#toast.show{opacity:1;transform:translateX(-50%)}
 </style>
 </head>
 <body>
-
-<div class="top"><div class="top-in">
-  <button class="back" id="bk">← 项目册</button>
-  <div class="brand">charge<i>.</i></div>
-  <button class="top-add" id="addTop">＋ 新项目</button>
-</div></div>
-
 <div class="wrap">
-
-  <!-- 项目列表 -->
-  <div id="viewList">
-    <div class="lhero fadein in">
-      <div class="en">100 HOURS OF FOCUS</div>
-      <h1>100小时专注 · 项目册</h1>
-      <p>一个项目，一册 100 小时。学一门课、练一项技能、写一本书——分开充能，各自点亮。</p>
-    </div>
-    <div class="plist" id="plist"></div>
-    <button class="empty" id="addEmpty" style="width:100%;margin-top:12px">还没有项目<br>点这里创建第一个「100 小时」✦</button>
+  <div class="top">
+    <button class="bk" id="bk">←</button>
+    <div class="brand">charge.<i>100 HOURS OF FOCUS</i></div>
+    <button class="addbtn list-only" id="addTop">＋ 新项目</button>
   </div>
 
-  <!-- 项目详情 -->
-  <div id="viewProj">
-    <div class="phead">
-      <div class="pring">
-        <svg viewBox="0 0 60 60" width="64" height="64">
-          <circle cx="30" cy="30" r="26" fill="none" stroke="#F0EDE5" stroke-width="5"/>
-          <circle id="prArc" cx="30" cy="30" r="26" fill="none" stroke="#A9C0CE" stroke-width="5" stroke-linecap="round" stroke-dasharray="163.4" stroke-dashoffset="163.4" style="transition:stroke-dashoffset .5s ease"/>
-        </svg>
-      </div>
-      <div class="ptit">
-        <div class="en">PROJECT · <span id="hNum">1/100</span> CHARGED</div>
-        <h1 id="hName">—</h1>
-      </div>
+  <div id="viewList" class="list-only">
+    <div class="hero">
+      <h1>一册一项目<br><span>各自充能 100 小时</span></h1>
+      <div class="sub">挑一个 emoji 和颜色 · 专注一小时点亮一格</div>
+    </div>
+    <div class="plist" id="plist"></div>
+    <button class="empty" id="addEmpty"><b>＋</b>开一本新的 100 小时</button>
+  </div>
+
+  <div id="viewProj" class="proj-only" style="display:none">
+    <div class="phero" id="phero">
+      <span class="e2" id="hEmoji">🎯</span>
+      <div class="nm" id="hName">—</div>
+      <div class="meta" id="hMeta">—</div>
+      <svg class="pring" width="92" height="92" viewBox="0 0 92 92">
+        <circle cx="46" cy="46" r="40" fill="none" stroke="rgba(58,58,56,.1)" stroke-width="5"/>
+        <circle id="prArc" cx="46" cy="46" r="40" fill="none" stroke="#A9C0CE" stroke-width="5"
+          stroke-linecap="round" transform="rotate(-90 46 46)" stroke-dasharray="251.3" stroke-dashoffset="251.3"/>
+        <text x="46" y="43" text-anchor="middle" font-size="15" fill="#3A3A38" id="hNum2">0/100</text>
+        <text x="46" y="59" text-anchor="middle" font-size="9" fill="#9A968C" letter-spacing="1.5">HOURS</text>
+      </svg>
     </div>
 
     <section class="glass">
       <div class="glabel"><span class="n">01</span>DATES · 起始与结束</div>
-      <div class="dates">
-        <div><label>START · 起始日</label><input type="date" id="start"></div>
-        <div><label>END · 结束日</label><input type="date" id="end"></div>
-      </div>
-      <div class="daysline" id="daysline">选好日期后，这里会显示总天数。</div>
+      <div style="display:flex;gap:10px"><input type="date" id="start"><input type="date" id="end"></div>
     </section>
-
     <section class="glass">
-      <div class="glabel"><span class="n">02</span>GOAL · 这个 100 小时要干啥</div>
-      <input id="goal" class="goal-in" placeholder="例：钢琴 100 小时，弹会 5 首曲子">
+      <div class="glabel"><span class="n">02</span>GOAL · 目标</div>
+      <input type="text" id="goal" placeholder="这 100 小时，我要练成什么？">
     </section>
-
     <section class="glass">
       <div class="glabel"><span class="n">03</span>CHARGE · 点亮专注小时</div>
-      <div class="cells-wrap" id="cells"></div>
-      <div class="celtip"><span>已充 <b id="c2">0</b> 格</span><span>每格 = 1 小时</span><span>剩 <b id="c3">100</b> 格</span></div>
+      <div class="cw" id="cells"></div>
+      <div class="celtip"><span>已充 <b id="c2">0</b></span><span>每格 = 1 小时</span><span>剩 <b id="c3">100</b></span></div>
       <div class="fullrow" id="fullrow">✦ FULLY CHARGED · 这 100 小时，你说到做到了</div>
     </section>
-
     <section class="glass">
       <div class="glabel"><span class="n">04</span>100 HOURS LATER · 那时我希望</div>
       <textarea id="hope" placeholder="100 小时后的我，正在……"></textarea>
     </section>
-
     <section class="glass">
       <div class="glabel"><span class="n">05</span>BREAK IT DOWN · 拆解目标</div>
       <textarea id="brk" placeholder="拆成小块：先做哪一步？每周几小时？" style="min-height:130px"></textarea>
     </section>
-
     <button class="delrow" id="del">删除此项目</button>
   </div>
 
   <footer class="foot"><b>charge.</b> · 100 HOURS OF FOCUS<br>一册一项目 · 慢慢充</footer>
 </div>
 
-<div id="toast"></div>
-<script>
+<div id="sheetMask"></div>
+<div id="sheet">
+  <div class="sh-h"><b>开一本新的 100 小时</b><button class="sh-close" id="shClose">✕</button></div>
+  <div class="sh-l">挑一个 EMOJI</div>
+  <div class="egrid" id="egrid"></div>
+  <div class="sh-l">挑一个颜色</div>
+  <div class="cgrid" id="cgrid"></div>
+  <div class="sh-l">项目名称</div>
+  <input type="text" id="newName" placeholder="比如：钢琴 100 小时">
+  <button class="sh-go" id="shGo">开始充能 →</button>
+</div>
 
-// ---------- engine ----------
-const $ = s => document.querySelector(s);
+<div id="toast"></div>
+<script>const $ = s => document.querySelector(s);
 const KEY = 'charge100_v2';
-const TOTAL = 100;
-const PALETTE = ['#A9C0CE','#B7C4AE','#C4B5D6','#E9C8B8','#EAD9A8','#D9B8B8','#B8CCC4','#CBB8CB'];
+const TOTAL = 100, CIRC = 2*Math.PI*40;
+const PALETTE = ['#A9C0CE','#B7C4AE','#C4B5D6','#E9C8B8','#E5D6A3','#D9B8B8','#B8D4CE','#B4C4D4','#E0D4C0','#E3C4CE'];
+const EMOJIS = ['🎯','📚','✏️','📝','💻','🎧','🧠','🔬','📐','🗂','💼','📊','💬','🔤','🎹','🎸','🎤','🎨','🎬','📷','✍️','🧵','🪡','🏃','🧘','🏊','🚴','⚽','🏀','🎾','💪','🥗','🌙','😴','⚖️','🍳','🍰','☕','🌱','🧹','🛠','📅','💰','📈','🧾','🪴','💡','🚀','🌊','🏔','⭐','🎮','🧩','♟','🪁','🎓','🗺','🏛','📿','🕯','🤿','⛳','⛸','🏂','🤸','🎼','🧶','🎲','📖','🖥','⏱','🍀','🫧'];
 let S = JSON.parse(localStorage.getItem(KEY) || 'null') || {projects:[], seq:0};
-let cur = null;   // 当前打开项目 id
+let cur = null;
+let draft = {emoji:'🎯', color:PALETTE[0]};
 
 function save(){ localStorage.setItem(KEY, JSON.stringify(S)); }
 function toast(msg){
@@ -225,112 +179,112 @@ function toast(msg){
   clearTimeout(window.__tt); window.__tt = setTimeout(()=>t.classList.remove('show'), 1700);
 }
 function P(){ return S.projects.find(p => p.id === cur); }
-function done(p){ return p.cells.length; }
+
+// ---- sheet：emoji + color ----
+$('#egrid').innerHTML = EMOJIS.map(e => '<button class="eg" data-e="'+e+'">'+e+'</button>').join('');
+$('#cgrid').innerHTML = PALETTE.map(c => '<button class="cdot" data-c="'+c+'" style="background:'+c+'"></button>').join('');
+$('#egrid').addEventListener('click', e => {
+  const b = e.target.closest('.eg'); if (!b) return;
+  draft.emoji = b.dataset.e;
+  document.querySelectorAll('.eg').forEach(x => x.classList.toggle('on', x === b));
+});
+$('#cgrid').addEventListener('click', e => {
+  const b = e.target.closest('.cdot'); if (!b) return;
+  draft.color = b.dataset.c;
+  document.querySelectorAll('.cdot').forEach(x => x.classList.toggle('on', x === b));
+});
+function openSheet(){
+  $('#newName').value = '';
+  document.body.classList.add('sheetopen');
+  setTimeout(() => $('#newName').focus(), 340);
+}
+function closeSheet(){ document.body.classList.remove('sheetopen'); }
+$('#addTop').addEventListener('click', openSheet);
+$('#addEmpty').addEventListener('click', openSheet);
+$('#shClose').addEventListener('click', closeSheet);
+$('#sheetMask').addEventListener('click', closeSheet);
+$('#shGo').addEventListener('click', () => {
+  const name = $('#newName').value.trim();
+  if (!name){ toast('先给这本 100 小时起个名字'); return; }
+  S.seq++;
+  S.projects.push({id:'p'+Date.now(), name, emoji:draft.emoji, color:draft.color,
+    start:'', end:'', goal:'', hope:'', brk:'', cells:[]});
+  save(); closeSheet();
+  toast('✦ 新项目已建，去点亮第一个 1h');
+  open(S.projects[S.projects.length-1].id);
+});
 
 // ---- 列表 ----
 function renderList(){
   const el = $('#plist');
   $('#addEmpty').style.display = S.projects.length ? 'none' : 'block';
   el.innerHTML = S.projects.map(p => {
-    const n = done(p), c = p.color, pct = Math.round(n/TOTAL*100);
-    return '<button class="pcard fadein in" data-id="'+p.id+'">'+
-      '<span class="pdot" style="background:'+c+'"></span>'+
-      '<span class="pmain"><span class="pname">'+esc(p.name)+'</span>'+
-      '<span class="pmeta">开 '+esc(p.start||'—')+' · '+esc(p.goal||'目标待填')+'</span>'+
-      '<span class="bar"><i style="width:'+pct+'%;background:'+c+'"></i></span></span>'+
-      '<span class="pnum mono"><b>'+n+'</b>/100</span></button>';
+    const n = p.cells.length, pct = Math.round(n/TOTAL*100), off = CIRC*(1-n/TOTAL);
+    return '<button class="pcard" data-id="'+p.id+'">'+
+      '<span class="band" style="background:'+p.color+'"></span>'+
+      '<span class="pf"><span class="e">'+p.emoji+'</span><span class="nm">'+p.name+'</span>'+
+      '<span class="meta">'+n+' / 100 小时 · '+(n>=100?'已满充':'剩余 '+(100-n)+'h')+'</span></span>'+
+      '<svg class="ring" width="60" height="60" viewBox="0 0 60 60">'+
+      '<circle cx="30" cy="30" r="25" fill="none" stroke="#EFECE4" stroke-width="4"/>'+
+      '<circle cx="30" cy="30" r="25" fill="none" stroke="'+p.color+'" stroke-width="4" stroke-linecap="round"'+
+      ' transform="rotate(-90 30 30)" stroke-dasharray="'+CIRC.toFixed(1)+'" stroke-dashoffset="'+off.toFixed(1)+'"/>'+
+      '<text x="30" y="34" text-anchor="middle" font-size="12" fill="#3A3A38" font-weight="700">'+pct+'%</text></svg></button>';
   }).join('');
-  el.querySelectorAll('.pcard').forEach(b => b.addEventListener('click', () => open(b.dataset.id)));
 }
-function esc(s){ return (s||'').replace(/[&<>"]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m])); }
+$('#plist').addEventListener('click', e => {
+  const c = e.target.closest('.pcard'); if (c) open(c.dataset.id);
+});
 
 // ---- 详情 ----
 function render(){
   const p = P(); if (!p) return;
-  const n = done(p), pct = n/TOTAL;
+  const n = p.cells.length;
+  document.documentElement.style.setProperty('--pc', p.color);
+  $('#phero').style.background = 'linear-gradient(135deg,'+p.color+'38,'+p.color+'12)';
+  $('#hEmoji').textContent = p.emoji;
   $('#hName').textContent = p.name;
-  $('#hNum').textContent = n + '/100';
-  document.querySelectorAll('.cell').forEach(c => {
-    const on = p.cells.includes(+c.dataset.i);
-    c.classList.toggle('on', on);
-    c.style.background = on ? p.color : '';
-  });
-  const CIRC = 163.4;
-  $('#prArc').setAttribute('stroke-dashoffset', (CIRC*(1-pct)).toFixed(1));
+  $('#hMeta').textContent = (p.start&&p.end) ? (p.start+' → '+p.end) : '未设日期 · 也可以随时开始';
+  $('#hNum2').textContent = n+'/100';
   $('#prArc').setAttribute('stroke', p.color);
+  $('#prArc').setAttribute('stroke-dashoffset', (CIRC*(1-n/TOTAL)).toFixed(1));
   $('#c2').textContent = n;
-  $('#c3').textContent = TOTAL - n;
-  $('#fullrow').classList.toggle('show', n >= TOTAL);
-  // 日期天数
-  const dl = $('#daysline');
-  if (p.start && p.end){
-    const d = Math.round((new Date(p.end) - new Date(p.start))/86400000);
-    dl.innerHTML = d >= 0
-      ? '从 <b>'+esc(p.start)+'</b> 到 <b>'+esc(p.end)+'</b>，共 <b>'+d+'</b> 天 —— 每天专注 <b>'+Math.max(1, Math.ceil(TOTAL/Math.max(1,d)))+'</b> 小时正好充完。'
-      : '结束日早于起始日啦，改一下？';
-  } else dl.textContent = '选好日期后，这里会显示总天数。';
-}
-['start','end','goal','hope','brk'].forEach(id => {
-  const el = document.getElementById(id);
-  el.addEventListener('input', () => {
-    const p = P(); if (!p) return;
-    p[id] = el.value; save();
-    if (id==='start'||id==='end') render();
+  $('#c3').textContent = TOTAL-n;
+  $('#fullrow').classList.toggle('show', n>=TOTAL);
+  const cw = $('#cells');
+  cw.innerHTML = Array.from({length:TOTAL}, (_,i) =>
+    '<button class="cell'+(p.cells.includes(i)?' on':'')+'" data-i="'+i+'">'+String(i+1).padStart(2,'0')+'</button>').join('');
+  ['start','end','goal','hope','brk'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el.value !== (p[id]||'')) el.value = p[id]||'';
   });
-});
-$('#cells').innerHTML = Array.from({length:TOTAL},(_,i)=>
-  '<button class="cell" data-i="'+i+'">'+String(i+1).padStart(2,'0')+'</button>').join('');
+  const d = (p.start&&p.end) ? Math.round((new Date(p.end)-new Date(p.start))/86400000) : null;
+  if (d !== null && !isNaN(d)) $('#hMeta').textContent = p.start+' → '+p.end+' · 共 '+d+' 天';
+}
 $('#cells').addEventListener('click', e => {
   const b = e.target.closest('.cell'); if (!b) return;
   const p = P(); if (!p) return;
   const i = +b.dataset.i, on = p.cells.includes(i);
-  if (on) p.cells = p.cells.filter(x => x!==i);
-  else { p.cells.push(i); p.cells.sort((a,b)=>a-b); }
+  p.cells = on ? p.cells.filter(x => x!==i) : [...p.cells, i].sort((a,b)=>a-b);
   save(); render();
-  toast(on ? '收回 1 格 · 剩 '+(TOTAL-p.cells.length) : '<b>⚡ +1h</b> '+p.name+' 已充 '+p.cells.length+' / 100');
+  toast(on ? '收回 1 格 · 剩 '+(TOTAL-p.cells.length) : '<b>⚡ +1h</b> '+p.emoji+' '+p.name+' 已充 '+p.cells.length+'/100');
 });
-
-// ---- 导航 ----
+['start','end','goal','hope','brk'].forEach(id => {
+  const el = document.getElementById(id);
+  el.addEventListener('input', () => { const p = P(); if (!p) return; p[id] = el.value; save(); if (id==='start'||id==='end') render(); });
+});
 function open(id){
-  cur = id;
-  const p = P();
-  ['start','end','goal','hope','brk'].forEach(k => document.getElementById(k).value = p[k] || '');
-  render();
-  document.body.classList.add('detail');
-  $('#viewProj').classList.add('fadein','in');
-  scrollTo(0,0);
+  cur = id; document.body.classList.add('detail');
+  $('#viewProj').style.display = 'block';
+  render(); scrollTo(0,0);
 }
 function close(){
-  cur = null;
-  document.body.classList.remove('detail');
-  renderList();
-  scrollTo(0,0);
+  cur = null; document.body.classList.remove('detail');
+  $('#viewProj').style.display = 'none';
+  document.documentElement.style.setProperty('--pc', '#A9C0CE');
+  renderList(); scrollTo(0,0);
 }
 $('#bk').addEventListener('click', close);
-function addProject(){
-  const name = prompt('这个 100 小时要干啥？（项目名）');
-  if (!name || !name.trim()) return;
-  S.seq++;
-  S.projects.push({
-    id: 'p'+Date.now(), name: name.trim(),
-    color: PALETTE[(S.seq-1) % PALETTE.length],
-    start:'', end:'', goal:'', hope:'', brk:'', cells:[]
-  });
-  save();
-  toast('✦ 新项目已建，去点亮第一个 1h');
-  open(S.projects[S.projects.length-1].id);
-}
-$('#addTop').addEventListener('click', addProject);
-$('#addEmpty').addEventListener('click', addProject);
-$('#del').addEventListener('click', () => {
-  const p = P(); if (!p) return;
-  if (confirm('删除「'+p.name+'」？100 格记录会一起消失。')){
-    S.projects = S.projects.filter(x => x.id !== p.id);
-    save(); close(); toast('已删除');
-  }
-});
 renderList();
-
 </script>
 </body>
 </html>
